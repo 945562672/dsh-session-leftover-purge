@@ -11,6 +11,9 @@ the public `api-session/removed` event and finishes the cleanup.
 ## Install
 
 ```bash
+# simplest: install the latest from npm — no git, no GitHub access needed
+dsh plugin add dsh-session-leftover-purge
+
 # default: always the tip of main (needs git on the target machine)
 dsh plugin add github:945562672/dsh-session-leftover-purge
 
@@ -21,10 +24,11 @@ dsh plugin add github:945562672/dsh-session-leftover-purge#vX.Y.Z
 dsh plugin add https://github.com/945562672/dsh-session-leftover-purge/releases/latest/download/dsh-session-leftover-purge.tgz
 ```
 
-None of the three commands changes between releases — copy them as-is.
+None of the four commands changes between releases — copy them as-is.
 
-The first two go through pnpm's git protocol and therefore need `git` on the target machine; the
-third is a plain HTTPS download and only needs reachable GitHub. Every release publishes two
+The first one goes through the npm registry — the simplest and most reliable of the four. The
+two git forms go through pnpm's git protocol and therefore need `git` on the target machine; the
+last is a plain HTTPS download and only needs reachable GitHub. Every release publishes two
 assets: the versioned `…-X.Y.Z.tgz` and the fixed name `dsh-session-leftover-purge.tgz` that
 `latest/download/` resolves to.
 

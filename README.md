@@ -9,6 +9,9 @@
 ## 安装
 
 ```bash
+# 最省事：从 npm 装最新版，不需要 git，也不需要访问 GitHub
+dsh plugin add dsh-session-leftover-purge
+
 # 默认：永远装 main 的最新提交（需要本机有 git）
 dsh plugin add github:945562672/dsh-session-leftover-purge
 
@@ -19,9 +22,10 @@ dsh plugin add github:945562672/dsh-session-leftover-purge#vX.Y.Z
 dsh plugin add https://github.com/945562672/dsh-session-leftover-purge/releases/latest/download/dsh-session-leftover-purge.tgz
 ```
 
-三条命令都**不会随版本变化**，直接抄就行。
+四条命令都**不会随版本变化**，直接抄就行。
 
-前两条由 pnpm 走 git 协议，目标机器必须有 `git`；第三条是普通 HTTPS 下载，只要求能访问
+第一条走 npm registry，最省事也最稳；中间两条由 pnpm 走 git 协议，目标机器必须有 `git`；
+最后一条是普通 HTTPS 下载，只要求能访问
 GitHub。每次发版都会同时上传两个附件：带版本号的 `…-X.Y.Z.tgz` 和固定名的
 `dsh-session-leftover-purge.tgz`，后者就是 `latest/download/` 指向的那个。
 
