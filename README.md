@@ -9,18 +9,21 @@
 ## 安装
 
 ```bash
-# 1. 跟随 main 的最新提交（需要本机有 git）
+# 默认：永远装 main 的最新提交（需要本机有 git）
 dsh plugin add github:945562672/dsh-session-leftover-purge
 
-# 2. 钉住某个版本 —— 结果可复现，推荐
-dsh plugin add github:945562672/dsh-session-leftover-purge#v1.1.5
+# 需要锁死版本时，把 vX.Y.Z 换成 tags 页里的任意 tag
+dsh plugin add github:945562672/dsh-session-leftover-purge#vX.Y.Z
 
-# 3. 不需要 git：直接取打好包的 tgz
-dsh plugin add https://github.com/945562672/dsh-session-leftover-purge/releases/download/v1.1.5/dsh-session-leftover-purge-1.1.5.tgz
+# 不需要 git：永远取最新一版的 tgz
+dsh plugin add https://github.com/945562672/dsh-session-leftover-purge/releases/latest/download/dsh-session-leftover-purge.tgz
 ```
 
-第 1、2 种由 pnpm 走 git 协议，目标机器必须有 `git`；第 3 种是普通 HTTPS 下载，只要求能访问
-GitHub。三种装法装的是同一份代码。
+三条命令都**不会随版本变化**，直接抄就行。
+
+前两条由 pnpm 走 git 协议，目标机器必须有 `git`；第三条是普通 HTTPS 下载，只要求能访问
+GitHub。每次发版都会同时上传两个附件：带版本号的 `…-X.Y.Z.tgz` 和固定名的
+`dsh-session-leftover-purge.tgz`，后者就是 `latest/download/` 指向的那个。
 
 **装完必须完全退出并重新打开 DSH。** host 半侧由 Loader 在进程启动时装载，运行中新装的包
 不会挂进当前进程。刷新页面只更新设置页里的表单，不会让清理逻辑生效。
