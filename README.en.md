@@ -18,6 +18,23 @@ dsh plugin add github:945562672/dsh-session-leftover-purge
 process start, so a package installed while DSH is running is not mounted into the current
 process. Reloading the page only refreshes the settings form, it does not make the cleanup run.
 
+## Requirements
+
+**Required:** DeepSeek Harness itself (`>= 0.2.0-rc.1 < 0.3.0-0`). The plugin runs no background
+service, and the only third-party package it imports is `@deepseek-ai/schemastery`, which is
+installed automatically.
+
+**Co-operates with** (missing ones are skipped, never an error):
+
+| Component | Behaviour when absent |
+|---|---|
+| `@michengai/dsh-archive-manager` | No "delete session" entry point, so no purge is triggered; only the boot reconcile runs |
+| `billion-context` (bili) | Snapshot and index steps are skipped, logged as `bili-sessions-root-missing` |
+| `dsh-cost-meter` | Ledger and detail-file steps are skipped, logged as `ledger-missing` / `cost-files-root-missing` |
+
+In short: install it and it runs. Whatever is missing simply gets less cleanup — a missing
+neighbour never stops the plugin from loading.
+
 ## Usage
 
 Nothing to configure. By default it does two things: removes the bili JSON snapshot and the

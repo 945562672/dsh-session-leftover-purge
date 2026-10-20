@@ -15,6 +15,21 @@ dsh plugin add github:945562672/dsh-session-leftover-purge
 **装完必须完全退出并重新打开 DSH。** host 半侧由 Loader 在进程启动时装载，运行中新装的包
 不会挂进当前进程。刷新页面只更新设置页里的表单，不会让清理逻辑生效。
 
+## 依赖
+
+**必需**：DeepSeek Harness 本身（`>= 0.2.0-rc.1 < 0.3.0-0`）。插件不跑常驻服务，唯一 import 的
+第三方包是 `@deepseek-ai/schemastery`，安装时自动拉取。
+
+**功能上配合**（缺了不会报错，只是对应能力自动跳过）：
+
+| 组件 | 缺失时的表现 |
+|---|---|
+| `@michengai/dsh-archive-manager` | 没有「删除会话」入口，也不会触发清理，只能靠开机对账 |
+| `billion-context`（bili） | 快照与索引两项跳过，日志记 `bili-sessions-root-missing` |
+| `dsh-cost-meter` | 账本与明细文件两项跳过，日志记 `ledger-missing` / `cost-files-root-missing` |
+
+也就是说：装上就能跑，缺谁就少清谁，不会因为别的插件没装而加载失败。
+
 ## 使用
 
 装好后不需要任何操作。默认只做两件事：清掉 bili 的 JSON 快照和 `index.db` 里的行。
