@@ -30,8 +30,9 @@ GitHub。每次发版都会同时上传两个附件：带版本号的 `…-X.Y.Z
 
 ## 依赖
 
-**必需**：DeepSeek Harness 本身（`>= 0.2.0-rc.1 < 0.3.0-0`）。插件不跑常驻服务，唯一 import 的
-第三方包是 `@deepseek-ai/schemastery`，安装时自动拉取。
+**必需**：DeepSeek Harness 本身（`>= 0.2.0-rc.1 < 0.3.0-0`）。插件不跑常驻服务；它唯一 import
+的第三方包 `@deepseek-ai/schemastery` 由宿主提供——在 `peerDependencies` 里声明为 optional，
+DSH 自带的 `dsh-settings` 本来就会装它，**不需要额外安装任何东西**。
 
 **功能上配合**（缺了不会报错，只是对应能力自动跳过）：
 

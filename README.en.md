@@ -35,8 +35,9 @@ process. Reloading the page only refreshes the settings form, it does not make t
 ## Requirements
 
 **Required:** DeepSeek Harness itself (`>= 0.2.0-rc.1 < 0.3.0-0`). The plugin runs no background
-service, and the only third-party package it imports is `@deepseek-ai/schemastery`, which is
-installed automatically.
+service, and the only third-party package it imports — `@deepseek-ai/schemastery` — is supplied by
+the host: it is declared as an optional peer dependency and already installed by DSH's own
+`dsh-settings`, so **nothing extra needs installing**.
 
 **Co-operates with** (missing ones are skipped, never an error):
 
