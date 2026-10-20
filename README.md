@@ -9,8 +9,18 @@
 ## 安装
 
 ```bash
+# 1. 跟随 main 的最新提交（需要本机有 git）
 dsh plugin add github:945562672/dsh-session-leftover-purge
+
+# 2. 钉住某个版本 —— 结果可复现，推荐
+dsh plugin add github:945562672/dsh-session-leftover-purge#v1.1.5
+
+# 3. 不需要 git：直接取打好包的 tgz
+dsh plugin add https://github.com/945562672/dsh-session-leftover-purge/releases/download/v1.1.5/dsh-session-leftover-purge-1.1.5.tgz
 ```
+
+第 1、2 种由 pnpm 走 git 协议，目标机器必须有 `git`；第 3 种是普通 HTTPS 下载，只要求能访问
+GitHub。三种装法装的是同一份代码。
 
 **装完必须完全退出并重新打开 DSH。** host 半侧由 Loader 在进程启动时装载，运行中新装的包
 不会挂进当前进程。刷新页面只更新设置页里的表单，不会让清理逻辑生效。

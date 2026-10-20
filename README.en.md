@@ -11,8 +11,18 @@ the public `api-session/removed` event and finishes the cleanup.
 ## Install
 
 ```bash
+# 1. follow the tip of main (needs git on the target machine)
 dsh plugin add github:945562672/dsh-session-leftover-purge
+
+# 2. pin an exact version — reproducible, recommended
+dsh plugin add github:945562672/dsh-session-leftover-purge#v1.1.5
+
+# 3. no git needed: fetch the packed tarball
+dsh plugin add https://github.com/945562672/dsh-session-leftover-purge/releases/download/v1.1.5/dsh-session-leftover-purge-1.1.5.tgz
 ```
+
+Options 1 and 2 go through pnpm's git protocol and therefore need `git` on the target machine.
+Option 3 is a plain HTTPS download and only needs reachable GitHub. All three install the same code.
 
 **Fully quit and reopen DSH after installing.** The host half is loaded by the DSH Loader at
 process start, so a package installed while DSH is running is not mounted into the current
