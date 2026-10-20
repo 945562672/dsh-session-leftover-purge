@@ -95,9 +95,12 @@ archive-manager 的删除动作会清掉 DSH 自己的会话痕迹（transcript 
 | 清理 bili JSON 快照 | `biliJson` | 开 | bili 面板里列出的那一条 |
 | 清理 bili SQLite 索引 | `biliIndexDb` | 开 | 清理前自动备份三件套，可回滚；备份失败则不动库 |
 | 清理 cost-meter 账本明细 | `costMeterLedger` | 关 | 只删该会话的明细行，**当日总额一个字节都不动**；清理前把 ledger.json 备份进批次。原因见下节 |
+| 清理 cost-meter 原始明细文件 | `costMeterFiles` | 关 | 删 `ledger.json.billion-context/` 里该会话的 groups / streams / calls 文件。这些是「哪一轮花了多少」的凭证，**不参与任何总额计算**；清理前逐个复制进批次 |
+| 开机回收 index.db 空间 | `vacuumIndexDb` | 关 | VACUUM + WAL 截断，把已删行占用的字节真正还给磁盘（实测 319,488 → 16,384 字节）。需要写锁，拿不到就跳过；VACUUM 前后各查一次 `integrity_check`，非 `ok` 则报错但不破坏库 |
 | 演练模式 | `dryRun` | 关 | 只写日志，不移动不删除 |
 | 开机对账 | `reconcileOnBoot` | 开 | 只读扫描孤儿 |
 | 自动清理孤儿 | `autoPurgeOrphans` | 关 | 对账发现孤儿时直接清 |
+| 备份保留天数 | `trashRetentionDays` | 7 | 超过即在下次启动时删掉整个批次；`0` = 永久保留。默认 7 天，配合「备份本身就是一份会话快照」的取舍 |
 | 开机延迟（毫秒） | `bootDelayMs` | 8000 | 毫秒 |
 | 恢复最近备份 | `restoreBackupTrigger` | 0 | **把数字改成任意新值（1、2、3…）保存，即执行一次** |
 | 删除全部备份 | `deleteBackupsTrigger` | 0 | 同上，清空 `trash/`，不可恢复 |
@@ -209,7 +212,11 @@ archive-manager 的删除动作会清掉 DSH 自己的会话痕迹（transcript 
   `busy:cost-meter-lock-held` / `changed-during-read` / `changed-before-rename` 跳过，下次再处理。
   三个 reason 都出现在 `purge.log` 里，不会静默失败。
 - 不清理 Electron 的 Local Storage / HTTP 缓存（文件常被占用，且 Chromium 自己会 compaction）。
-- 不做 `VACUUM`：删行后文件体积不会立刻缩小，页会被复用。
+  已删会话的旧键可能还在 `leveldb/*.log` 里留几天，直到 compaction 重写；那是浏览器侧的
+  追加日志，不是本插件能安全改写的目标。要立刻抹掉只能完全退出 DSH 后删整个 leveldb 目录，
+  代价是所有 UI 偏好重置。
+- 默认不做 `VACUUM`：删行后文件体积不会立刻缩小，页会被复用。打开 `vacuumIndexDb` 才会在
+  开机对账后回收一次（实测 319,488 → 16,384 字节），失败不影响任何数据。
 - `blocks.covered_hash` 在现有库里本来就有悬挂引用（bili 自己的问题），
   按 `session_id` 精确删行不会让它更糟，但也修不好它。
 - 卸载本插件不影响任何删除行为，只是不再自动清理。
