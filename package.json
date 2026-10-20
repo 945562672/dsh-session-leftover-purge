@@ -1,6 +1,6 @@
 {
   "name": "dsh-session-leftover-purge",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "删除会话后清理 bili 与 cost-meter 残留 / Purge bili & cost-meter leftovers after a session is deleted",
   "type": "module",
   "main": "lib/index.js",
