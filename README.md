@@ -174,6 +174,32 @@ archive-manager 的删除动作会清掉 DSH 自己的会话痕迹（transcript 
 | `triggers.json` | 已执行过的触发器数字 |
 | `trash/<批次>/` | 可回滚的备份批次 |
 
+## 实测记录
+
+2026-10-21 04:04（UTC+8）· DSH Desktop · Windows 11 · billion-context 0.1.202。真实右键删除一个含 39 条消息的会话：
+
+```
+20:04:48.240Z  skip session-ead3eb78-…: transcript still on disk
+20:04:49.848Z  purge session-ead3eb78-… moved=1
+```
+
+两个值得记的观察：
+
+1. **重试是必要的，不是保险丝。** archive-manager 发出 `api-session/removed` 的那一刻 transcript 目录还在磁盘上，插件按设计跳过；1.5 秒后重试才真正执行。只发一次事件就放弃的实现会漏掉这个会话。
+2. **清库前备份真的会先生效。** 同一批次里留下 `index.db` 17.9 MB + `index.db-wal` 8.4 MB + `index.db-shm` 32 KB，删库失败或想反悔都能退回去。
+
+清理统计：
+
+| 项 | 数量 |
+|---|---|
+| bili 快照 | 1 个（scanned 3，matched 1，moved 1，skipped 0） |
+| `index.db` messages | 5 行 |
+| `index.db` refs | 5 行 |
+| `index.db` conversations | 1 行 |
+| `index.db` sessions | 1 行 |
+
+事后复核：该会话在 `sessions` / `conversations` / `messages` / `refs` 四张表均为 0 行，DSH transcript 目录不存在，bili 快照目录只剩活会话。
+
 ## 已知限制
 
 - 只在「通过 archive-manager 删除」时即时触发。其它删除途径靠启动对账发现。

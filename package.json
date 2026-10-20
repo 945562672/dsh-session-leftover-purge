@@ -1,6 +1,6 @@
 {
   "name": "dsh-session-leftover-purge",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "DeepSeek Harness plugin: finish the cleanup when a session is deleted — remove the billion-context snapshot and index rows that archive-manager leaves behind.",
   "type": "module",
   "main": "lib/index.js",
