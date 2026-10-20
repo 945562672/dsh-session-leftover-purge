@@ -1,0 +1,60 @@
+{
+  "name": "dsh-session-leftover-purge",
+  "version": "1.0.0",
+  "description": "DeepSeek Harness plugin: finish the cleanup when a session is deleted — remove the billion-context snapshot and index rows that archive-manager leaves behind.",
+  "type": "module",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "author": "fenri",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "billion-context",
+    "bili",
+    "session",
+    "cleanup",
+    "sqlite"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/945562672/dsh-session-leftover-purge.git"
+  },
+  "homepage": "https://github.com/945562672/dsh-session-leftover-purge#readme",
+  "bugs": {
+    "url": "https://github.com/945562672/dsh-session-leftover-purge/issues"
+  },
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-plugin-manager"
+      ]
+    },
+    "compatibility": {
+      "dsh": ">=0.2.0-rc.1 <0.3.0-0"
+    }
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

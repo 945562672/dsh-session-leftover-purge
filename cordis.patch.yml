@@ -1,0 +1,12 @@
+# dsh-session-leftover-purge
+#
+# Host-side hook plugin. It owns no service and patches nothing: it only
+# subscribes to the public `api-session/removed` event that
+# @michengai/dsh-archive-manager emits from deleteSessionCore()
+# (lib/workspace.js:987) and cleans up the copies that DSH itself does not
+# know about (billion-context session snapshots).
+#
+# Disabling or removing this bundle never affects session deletion.
+- insert:
+    - id: session-leftover-purge
+      name: dsh-session-leftover-purge
