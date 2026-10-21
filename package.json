@@ -18,11 +18,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/945562672/dsh-session-leftover-purge.git"
+    "url": "git+https://github.com/FenrirCait/dsh-session-leftover-purge.git"
   },
-  "homepage": "https://github.com/945562672/dsh-session-leftover-purge#readme",
+  "homepage": "https://github.com/FenrirCait/dsh-session-leftover-purge#readme",
   "bugs": {
-    "url": "https://github.com/945562672/dsh-session-leftover-purge/issues"
+    "url": "https://github.com/FenrirCait/dsh-session-leftover-purge/issues"
   },
   "exports": {
     ".": {

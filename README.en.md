@@ -15,13 +15,13 @@ the public `api-session/removed` event and finishes the cleanup.
 dsh plugin add dsh-session-leftover-purge
 
 # default: always the tip of main (needs git on the target machine)
-dsh plugin add github:945562672/dsh-session-leftover-purge
+dsh plugin add github:FenrirCait/dsh-session-leftover-purge
 
 # pin an exact version by replacing vX.Y.Z with any tag from the tags page
-dsh plugin add github:945562672/dsh-session-leftover-purge#vX.Y.Z
+dsh plugin add github:FenrirCait/dsh-session-leftover-purge#vX.Y.Z
 
 # no git needed: always the newest packed tarball
-dsh plugin add https://github.com/945562672/dsh-session-leftover-purge/releases/latest/download/dsh-session-leftover-purge.tgz
+dsh plugin add https://github.com/FenrirCait/dsh-session-leftover-purge/releases/latest/download/dsh-session-leftover-purge.tgz
 ```
 
 None of the four commands changes between releases — copy them as-is.

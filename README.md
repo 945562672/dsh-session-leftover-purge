@@ -13,13 +13,13 @@
 dsh plugin add dsh-session-leftover-purge
 
 # 默认：永远装 main 的最新提交（需要本机有 git）
-dsh plugin add github:945562672/dsh-session-leftover-purge
+dsh plugin add github:FenrirCait/dsh-session-leftover-purge
 
 # 需要锁死版本时，把 vX.Y.Z 换成 tags 页里的任意 tag
-dsh plugin add github:945562672/dsh-session-leftover-purge#vX.Y.Z
+dsh plugin add github:FenrirCait/dsh-session-leftover-purge#vX.Y.Z
 
 # 不需要 git：永远取最新一版的 tgz
-dsh plugin add https://github.com/945562672/dsh-session-leftover-purge/releases/latest/download/dsh-session-leftover-purge.tgz
+dsh plugin add https://github.com/FenrirCait/dsh-session-leftover-purge/releases/latest/download/dsh-session-leftover-purge.tgz
 ```
 
 四条命令都**不会随版本变化**，直接抄就行。
